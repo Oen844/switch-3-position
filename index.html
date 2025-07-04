@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Switch 3 Posiciones</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f2f2f2;
+        }
+
+
+        .switch-container {
+            position: relative;
+            width: 150px;
+            height: 50px;
+            background: #ddd;
+            border-radius: 25px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .switch-button {
+            flex: 1;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 2;
+            font-weight: 500;
+            user-select: none;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .switch-slider {
+            position: absolute;
+            top: 3px;
+            bottom: 3px;
+            width: 33.333%;
+            left: 33.333%;
+            border-radius: 25px;
+            transition: left 0.3s, background 0.3s;
+            z-index: 1;
+            background: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="switch-container">
+        <div class="switch-slider" id="slider"></div>
+        <div class="switch-button" data-pos="0">No</div>
+        <div class="switch-button" data-pos="1"></div>
+        <div class="switch-button" data-pos="2">Sí</div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const buttons = document.querySelectorAll('.switch-button');
+
+        function updateSlider(pos) {
+            slider.style.left = `${pos * 33.333}%`;
+
+            // Reset color de texto
+            buttons.forEach(btn => btn.style.color = '#444');
+
+            // Cambiar color del slider y del texto
+            if (pos === 0) {
+                slider.style.background = '#e74c3c'; // Rojo
+                buttons[0].style.color = '#fff';
+            } else if (pos === 1) {
+                slider.style.background = '#95a5a6'; // Gris
+                buttons[1].style.color = '#444';
+            } else if (pos === 2) {
+                slider.style.background = '#3498db'; // Azul
+                buttons[2].style.color = '#fff';
+            }
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const pos = parseInt(button.getAttribute('data-pos'));
+                updateSlider(pos);
+                console.log(`Seleccionado: ${button.textContent}`);
+            });
+        });
+
+        // Inicializar en el centro
+        updateSlider(1);
+    </script>
+
+</body>
+
+</html>
